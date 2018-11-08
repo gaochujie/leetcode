@@ -38,6 +38,19 @@ public class Main {
         return left;
     }
 
+    //58最后一个单词的长度
+    public int lengthOfLastWord(String s) {
+        s = s.trim();
+        int count = 0;
+        for(int i=s.length()-1;i>=0;i--){
+            if(s.charAt(i) == ' '){
+                break;
+            }
+            count++;
+        }
+        return count;
+    }
+
     //88.合并两个有序数组
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         for(int i=m,j=0;j<nums2.length;i++,j++){
@@ -413,13 +426,47 @@ public class Main {
 
     //896.单调数列
     public boolean isMonotonic(int[] A) {
-        boolean aaa = (A[0]>A[1]);
+        if(A.length <= 2){
+            return true;
+        }
+        boolean positive = false;
+        boolean negative = false;
         for(int i=0;i<A.length-1;i++){
-            if((A[i] > A[i+1])^aaa){
+            if((A[i]-A[i+1])>0){
+                positive = true;
+            }
+            if((A[i]-A[i+1])<0){
+                negative = true;
+            }
+            if(positive && negative){
                 return false;
             }
         }
         return true;
+    }
+
+    //917.仅仅反转字母
+    public String reverseOnlyLetters(String S) {
+        char []chars = S.toCharArray();
+        int left = 0,right = chars.length-1;
+        while(left <= right){
+            if(chars[left]<='A' || (chars[left]>='Z' && chars[left]<='a') || chars[left]>='z'){
+                left++;
+                continue;
+            }
+            if(chars[right]<='A' || (chars[right]>='Z' && chars[right]<='a') || chars[right]>='z'){
+                right--;
+                continue;
+            }
+            char tmp = chars[left];
+            chars[left] = chars[right];
+            chars[right] = tmp;
+        }
+        StringBuilder sb = new StringBuilder();
+        for(char ch : chars){
+            sb.append(Character.toString(ch));
+        }
+        return sb.toString();
     }
 
     //922.按奇偶排序数组II
